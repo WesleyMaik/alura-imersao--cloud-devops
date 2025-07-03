@@ -45,22 +45,22 @@ def read_course_by_code(code: str, db: Session = Depends(get_db)):
 
 # Do not search for a course by ID or delete under any circumstances
 
-# @cursos_router.get("/cursos/{curso_id}", response_model=Curso)
-# def read_curso(curso_id: int, db: Session = Depends(get_db)):
-#     db_curso = db.query(ModelCurso).filter(ModelCurso.id == curso_id).first()
-#     if db_curso is None:
-#         raise HTTPException(status_code=404, detail="Curso não encontrado")
-#     return Curso.from_orm(db_curso)
+# @courses_router.get("/courses/{course_id}", response_model=CourseSchema)
+# def read_course(course_id: int, db: Session = Depends(get_db)):
+#     db_course = db.query(Course).filter(Course.id == course_id).first()
+#     if db_course is None:
+#         raise HTTPException(status_code=404, detail="Course not found")
+#     return db_course
 
 
-# @cursos_router.delete("/cursos/{curso_id}", response_model=Curso)
-# def delete_curso(curso_id: int, db: Session = Depends(get_db)):
-#     db_curso = db.query(ModelCurso).filter(ModelCurso.id == curso_id).first()
-#     if db_curso is None:
-#         raise HTTPException(status_code=404, detail="Curso não encontrado")
+# @courses_router.delete("/courses/{course_id}", response_model=CourseSchema)
+# def delete_course(course_id: int, db: Session = Depends(get_db)):
+#     db_course = db.query(Course).filter(Course.id == course_id).first()
+#     if db_course is None:
+#         raise HTTPException(status_code=404, detail="Course not found")
 
-#     curso_deletado = Curso.from_orm(db_curso)
+#     deleted_course = db_course
 
-#     db.delete(db_curso)
+#     db.delete(db_course)
 #     db.commit()
-#     return curso_deletado
+#     return deleted_course
