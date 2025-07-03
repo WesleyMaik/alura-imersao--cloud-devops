@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import Course
 from schemas import Course as CourseSchema, Courses as CoursesSchema
+from typing import List
 
 courses_router = APIRouter()
 

@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import Enrollment, Student, Course
 from schemas import Enrollment as EnrollmentSchema
+from typing import List, Union, Dict
 
 enrollments_router = APIRouter()
 
@@ -24,39 +25,39 @@ def create_enrollment(enrollment: EnrollmentSchema, db: Session = Depends(get_db
 
 
 
-@matriculas_router.get("/matriculas/aluno/{nome_aluno}", response_model=Dict[str, Union[str, List[str]]])
-def read_matriculas_por_nome_aluno(nome_aluno: str, db: Session = Depends(get_db)):
-    db_aluno = db.query(ModelAluno).filter(ModelAluno.nome.ilike(f"%{nome_aluno}%")).first()
+@enrollments_router.get("/enrollments/student/{student_name}", response_model=Dict[str, Union[str, List[str]]])
+def read_enrollments_by_student_name(student_name: str, db: Session = Depends(get_db)):
+    db_student = db.query(Student).filter(Student.name.ilike(f"%{student_name}%")).first()
 
-    if not db_aluno:
+    if not db_student:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Student not found")
 
-    cursos_matriculados = []
-    for matricula in db_aluno.matriculas:
-        curso = matricula.curso  
-        if curso:  
-            cursos_matriculados.append(curso.nome)
+    enrolled_courses = []
+    for enrollment in db_student.enrollments:
+        course = enrollment.course
+        if course:
+            enrolled_courses.append(course.name)
 
-    if not cursos_matriculados:
-        raise HTTPException(status_code=404, detail=f"O aluno '{nome_aluno}' não possui matrículas cadastradas.")
+    if not enrolled_courses:
+        raise HTTPException(status_code=404, detail=f"Student '{student_name}' has no enrollments.")
 
-    return {"aluno": db_aluno.nome, "cursos": cursos_matriculados}
+    return {"student": db_student.name, "courses": enrolled_courses}
 
-@matriculas_router.get("/matriculas/curso/{codigo_curso}", response_model=Dict[str, Union[str, List[str]]])
-def read_alunos_matriculados_por_codigo_curso(codigo_curso: str, db: Session = Depends(get_db)):
+@enrollments_router.get("/enrollments/course/{course_code}", response_model=Dict[str, Union[str, List[str]]])
+def read_enrolled_students_by_course_code(course_code: str, db: Session = Depends(get_db)):
     """Returns the course name and a list of enrolled students' names."""
-    db_curso = db.query(ModelCurso).filter(ModelCurso.codigo == codigo_curso).first()
+    db_course = db.query(Course).filter(Course.code == course_code).first()
 
-    if not db_curso:
+    if not db_course:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Course not found")
 
-    alunos_matriculados = []
-    for matricula in db_curso.matriculas:  # Iterate through the course enrollments
-        aluno = matricula.aluno  # Access the student directly through the relationship
-        if aluno:  # Check if the student exists (may have been deleted)
-            alunos_matriculados.append(aluno.nome)
+    enrolled_students = []
+    for enrollment in db_course.enrollments:  # Iterate through the course enrollments
+        student = enrollment.student  # Access the student directly through the relationship
+        if student:  # Check if the student exists (may have been deleted)
+            enrolled_students.append(student.name)
 
-    if not alunos_matriculados:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No students enrolled in the course '{db_curso.nome}'.")
+    if not enrolled_students:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No students enrolled in the course '{db_course.name}'.")
 
-    return {"curso": db_curso.nome, "alunos": alunos_matriculados}
+    return {"course": db_course.name, "students": enrolled_students}
