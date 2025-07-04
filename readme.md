@@ -14,30 +14,35 @@ This project is an API developed with FastAPI to manage students, courses, and e
    [Click here to download](https://github.com/guilhermeonrails/imersao-devops/archive/refs/heads/main.zip)
 
 2. **Create a virtual environment:**
+
    ```sh
    python3 -m venv ./venv
    ```
 
 3. **Activate the virtual environment:**
+
    - On Linux/Mac:
      ```sh
      source venv/bin/activate
      ```
    - On Windows, open a terminal in administrator mode and run the command:
+
    ```sh
    Set-ExecutionPolicy RemoteSigned
    ```
 
-     ```sh
-     venv\Scripts/activate
-     ```
+   ```sh
+   venv\Scripts/activate
+   ```
 
 4. **Install dependencies:**
+
    ```sh
    pip install -r requirements.txt
    ```
 
 5. **Run the application:**
+
    ```sh
    uvicorn app:app --reload
    ```
@@ -62,7 +67,7 @@ This project is an API developed with FastAPI to manage students, courses, and e
 
 ---
 
-- The SQLite database will be automatically created as `escola.db` on the first run.
-- To reset the database, simply delete the `escola.db` file (this will erase all data).
+- The SQLite database will be automatically created as `school.db` on the first run.
+- To reset the database, simply delete the `school.db` file (this will erase all data).
 
 ---
