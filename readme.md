@@ -10,49 +10,78 @@ This project is an API developed with FastAPI to manage students, courses, and e
 
 ## Steps to run the project
 
-1. **Download the repository:**
-   [Click here to download](https://github.com/guilhermeonrails/imersao-devops/archive/refs/heads/main.zip)
+1. **Clone or Download respository:**
+
+- Clone
+
+```sh
+git clone https://github.com/WesleyMaik/alura-imersao--cloud-devops.git
+```
+
+- Download
+  [Click here to download](https://github.com/WesleyMaik/alura-imersao--cloud-devops/archive/refs/heads/main.zip);
 
 2. **Create a virtual environment:**
 
-   ```sh
-   python3 -m venv ./venv
-   ```
+```sh
+python3 -m venv ./venv
+```
 
 3. **Activate the virtual environment:**
 
-   - On Linux/Mac:
-     ```sh
-     source venv/bin/activate
-     ```
-   - On Windows, open a terminal in administrator mode and run the command:
+- On Linux/Mac:
 
-   ```sh
-   Set-ExecutionPolicy RemoteSigned
-   ```
+```sh
+source venv/bin/activate
+```
 
-   ```sh
-   venv\Scripts/activate
-   ```
+- On Windows, open a terminal in administrator mode and run the command:
+
+```sh
+Set-ExecutionPolicy RemoteSigned
+```
+
+```sh
+venv\Scripts/activate
+```
 
 4. **Install dependencies:**
 
-   ```sh
-   pip install -r requirements.txt
-   ```
+```sh
+pip install -r requirements.txt
+```
 
 5. **Run the application:**
 
-   ```sh
-   uvicorn app:app --reload
-   ```
+```sh
+uvicorn app:app --reload
+```
 
 6. **Access the interactive documentation:**
 
-   Open your browser and go to:  
-   [http://127.0.0.1:8000/docs](http://127.00.1:8000/docs)
+Open your browser and go to:  
+[http://127.0.0.1:8000/docs](http://127.00.1:8000/docs)
 
-   Here you can test all API endpoints interactively.
+Here you can test all API endpoints interactively.
+
+### Run with Docker:
+
+1. **Build the Docker image:**
+
+```sh
+docker build -t api .
+```
+
+2. **Run the Docker container:**
+
+```sh
+docker run -d -p 8000:80 api
+```
+
+3. **Access the API documentation:**
+
+Open your browser and go to:  
+[http://localhost:8000/docs](http://localhost:8000/docs)
 
 ---
 
